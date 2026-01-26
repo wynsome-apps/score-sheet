@@ -19,7 +19,13 @@ An app to keep score while playing various board and card games.
         - [x] Game Name
         - [x] Scoring type (Normal vs. Reverse)
 
-### Phase 3: Scoring Interface (The Score Sheet)
+### Phase 3: Persistence & Offline Support
+- [x] Implement local data persistence (LocalStorage)
+- [ ] PWA Setup
+    - [ ] Web Manifest for "Add to Home Screen" (with mobile icons and splash screens)
+    - [ ] Service Worker for offline availability
+
+### Phase 4: Scoring Interface (The Score Sheet)
 - [ ] **Game Initialization**
     - [ ] Select a game template
     - [ ] Select players for the session
@@ -35,12 +41,6 @@ An app to keep score while playing various board and card games.
 - [ ] **Game Lifecycle**
     - [ ] "Keep screen awake" functionality
     - [ ] Option to finish game and view final results
-
-### Phase 4: Persistence & Offline Support
-- [ ] Implement local data persistence (LocalStorage or IndexedDB)
-- [ ] PWA Setup
-    - [ ] Web Manifest for "Add to Home Screen" (with mobile icons and splash screens)
-    - [ ] Service Worker for offline availability
 
 ### Phase 5: Dashboard & Polish
 - [ ] **Home Screen Dashboard**
