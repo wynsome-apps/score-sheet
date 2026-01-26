@@ -1,9 +1,11 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { nanoid } from 'nanoid'
+import { useGameHistoryStore } from './gameHistory'
 
 export const useGameSessionStore = defineStore('gameSession', () => {
   const activeGame = ref(JSON.parse(localStorage.getItem('activeGame') || 'null'))
+  const historyStore = useGameHistoryStore()
 
   function startGame(template, selectedPlayers) {
     activeGame.value = {
@@ -46,12 +48,28 @@ export const useGameSessionStore = defineStore('gameSession', () => {
     activeGame.value.isFinished = true
     activeGame.value.endTime = new Date().toISOString()
     
-    // Save to history (Phase 5 will use this, but good to have)
-    const history = JSON.parse(localStorage.getItem('gameHistory') || '[]')
-    history.unshift(activeGame.value)
-    localStorage.setItem('gameHistory', JSON.stringify(history.slice(0, 50))) // Keep last 50
+    // Calculate final scores and winner
+    const gameTotals = totals.value
+    activeGame.value.players.forEach((p, i) => {
+      p.totalScore = gameTotals[i]
+    })
+
+    const scoringType = activeGame.value.template.scoringType
+    let winner
+    if (scoringType === 'reverse') {
+      // Lowest score wins
+      winner = activeGame.value.players.reduce((min, p) => p.totalScore < min.totalScore ? p : min, activeGame.value.players[0])
+    } else {
+      // Highest score wins
+      winner = activeGame.value.players.reduce((max, p) => p.totalScore > max.totalScore ? p : max, activeGame.value.players[0])
+    }
+    activeGame.value.winner = winner
+
+    // Save to history
+    historyStore.addGame({ ...activeGame.value })
     
-    saveToLocalStorage()
+    activeGame.value = null
+    localStorage.removeItem('activeGame')
   }
 
   function cancelGame() {

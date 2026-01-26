@@ -43,11 +43,11 @@ An app to keep score while playing various board and card games.
     - [x] Option to finish game and view final results
 
 ### Phase 5: Dashboard & Polish
-- [ ] **Home Screen Dashboard**
-    - [ ] Last 5 games played (Name, date, winner)
-    - [ ] Quick-start most recent game settings
-    - [ ] Top 5 players (by games played)
-- [ ] Final UI/UX refinements (Mobile-first optimization)
+- [x] **Home Screen Dashboard**
+    - [x] Last 5 games played (Name, date, winner)
+    - [x] Quick-start most recent game settings
+    - [x] Top 5 players (by games played)
+- [x] Final UI/UX refinements (Mobile-first optimization)
 
 ### Phase 6: Deployment
 - [ ] Configure for Firebase Hosting

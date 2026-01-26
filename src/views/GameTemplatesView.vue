@@ -115,6 +115,18 @@ const deleteTemplate = (id) => {
 
 .add-btn {
   margin-bottom: 1rem;
+  background-color: #42b883;
+  color: white;
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.1rem;
+}
+
+section {
+  background-color: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
 }
 
 ul {
@@ -125,6 +137,10 @@ ul {
 li {
   padding: 1rem 0;
   border-bottom: 1px solid #eee;
+}
+
+li:last-child {
+  border-bottom: none;
 }
 
 .template-item {
@@ -141,15 +157,77 @@ li {
 
 .form-container {
   padding: 1.5rem;
-  border: 1px solid #ddd;
+  border: 1px solid #dee2e6;
   border-radius: 8px;
-  background-color: #f9f9f9;
+  background-color: #f8f9fa;
   color: #213547;
 }
 
+.form-group {
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+label {
+  font-weight: bold;
+}
+
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.radio-group label {
+  font-weight: normal;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: white;
+  cursor: pointer;
+}
+
+input[id="name"] {
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.form-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.form-actions button {
+  flex: 1;
+  padding: 0.8rem;
+}
+
+button[type="submit"] {
+  background-color: #42b883;
+  color: white;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.delete-btn {
+  background-color: #e74c3c;
+  color: white;
+}
+
 @media (prefers-color-scheme: dark) {
-  .form-container {
-    background-color: #1a1a1a;
+  section, .form-container {
+    background-color: #2a2a2a;
     color: rgba(255, 255, 255, 0.87);
     border-color: #444;
   }
@@ -161,51 +239,16 @@ li {
   li {
     border-bottom-color: #333;
   }
-}
 
-.form-group {
-  margin-bottom: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
+  .radio-group label {
+    background: #333;
+    border-color: #555;
+  }
 
-.radio-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.radio-group label {
-  font-weight: normal;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-input[type="text"] {
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.form-actions {
-  display: flex;
-  gap: 0.5rem;
-  margin-top: 1rem;
-}
-
-.actions {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.delete-btn {
-  background-color: #ff4d4d;
-  color: white;
-}
-
-.delete-btn:hover {
-  background-color: #ff3333;
+  input[id="name"] {
+    background-color: #333;
+    border-color: #555;
+    color: white;
+  }
 }
 </style>
