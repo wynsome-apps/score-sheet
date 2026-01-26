@@ -35,7 +35,10 @@ function quickStart(game) {
     </div>
 
     <section v-if="lastFiveGames.length > 0" class="dashboard-section">
-      <h2>Recent Games</h2>
+      <div class="section-header">
+        <h2>Recent Games</h2>
+        <RouterLink to="/play" class="header-link">Start New Game</RouterLink>
+      </div>
       <div class="games-list">
         <div v-for="game in lastFiveGames" :key="game.id" class="game-card">
           <div class="game-info">
@@ -54,7 +57,14 @@ function quickStart(game) {
 
     <div class="dashboard-grid">
       <section v-if="topPlayers.length > 0" class="dashboard-section">
-        <h2>Top Players</h2>
+        <div class="section-header">
+          <h2>Top Players</h2>
+          <div class="header-links">
+            <RouterLink to="/players" class="header-link">Add New Player</RouterLink>
+            <span class="separator">|</span>
+            <RouterLink to="/players" class="header-link">View List</RouterLink>
+          </div>
+        </div>
         <ul class="stats-list">
           <li v-for="player in topPlayers" :key="player.name">
             <span class="player-name">{{ player.name }}</span>
@@ -109,10 +119,36 @@ function quickStart(game) {
 }
 
 .dashboard-section h2 {
-  margin-bottom: 1rem;
+  margin: 0;
   font-size: 1.5rem;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 1rem;
   border-bottom: 1px solid #dee2e6;
   padding-bottom: 0.5rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.header-link {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #42b883;
+}
+
+.header-links {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.separator {
+  color: #dee2e6;
+  font-size: 0.8rem;
 }
 
 .games-list {
@@ -239,6 +275,12 @@ function quickStart(game) {
   }
   .stats-list li {
     border-bottom-color: #333;
+  }
+  .section-header {
+    border-bottom-color: #444;
+  }
+  .separator {
+    color: #444;
   }
 }
 </style>

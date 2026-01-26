@@ -47,7 +47,10 @@ An app to keep score while playing various board and card games.
     - [x] Last 5 games played (Name, date, winner)
     - [x] Quick-start most recent game settings
     - [x] Top 5 players (by games played)
-- [x] Final UI/UX refinements (Mobile-first optimization)
+    - [x] Dashboad refinements (New game/player links)
+- [x] **UI/UX Polish**
+    - [x] Convert top menu to bottom tab navigation with Material Icons
+    - [x] Final UI/UX refinements (Mobile-first optimization)
 
 ### Phase 6: Deployment
 - [ ] Configure for Firebase Hosting
