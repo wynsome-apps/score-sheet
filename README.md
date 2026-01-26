@@ -54,5 +54,5 @@ An app to keep score while playing various board and card games.
     - [x] Final UI/UX refinements (Mobile-first optimization)
 
 ### Phase 6: Deployment
-- [ ] Configure for Firebase Hosting
-- [ ] Final production build and deploy
+- [x] Configure for Firebase Hosting
+- [x] Final production build and deploy
