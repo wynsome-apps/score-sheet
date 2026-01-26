@@ -37,7 +37,11 @@ function quickStart(game) {
     <section v-if="lastFiveGames.length > 0" class="dashboard-section">
       <div class="section-header">
         <h2>Recent Games</h2>
-        <RouterLink to="/play" class="header-link">Start New Game</RouterLink>
+        <div class="header-links">
+          <RouterLink to="/play" class="header-link">Start New Game</RouterLink>
+          <span class="separator">|</span>
+          <RouterLink to="/history" class="header-link">View Full History</RouterLink>
+        </div>
       </div>
       <div class="games-list">
         <div v-for="game in lastFiveGames" :key="game.id" class="game-card">

@@ -48,6 +48,7 @@ An app to keep score while playing various board and card games.
     - [x] Quick-start most recent game settings
     - [x] Top 5 players (by games played)
     - [x] Dashboad refinements (New game/player links)
+    - [x] Full game history page
 - [x] **UI/UX Polish**
     - [x] Convert top menu to bottom tab navigation with Material Icons
     - [x] Final UI/UX refinements (Mobile-first optimization)
