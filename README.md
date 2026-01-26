@@ -21,26 +21,26 @@ An app to keep score while playing various board and card games.
 
 ### Phase 3: Persistence & Offline Support
 - [x] Implement local data persistence (LocalStorage)
-- [ ] PWA Setup
+- [ ] PWA Setup (Deferred)
     - [ ] Web Manifest for "Add to Home Screen" (with mobile icons and splash screens)
     - [ ] Service Worker for offline availability
 
 ### Phase 4: Scoring Interface (The Score Sheet)
-- [ ] **Game Initialization**
-    - [ ] Select a game template
-    - [ ] Select players for the session
-- [ ] **Score Entry Table**
-    - [ ] Table layout: Players across top, rounds down the side
-    - [ ] Input cells: Large touch-friendly targets
-    - [ ] Keyboard support: Numeric keyboard triggered by default on mobile
-    - [ ] Navigation: Pressing 'Enter' moves focus to the next cell
-- [ ] **Real-time Feedback**
-    - [ ] Sticky footer showing total scores per player
-    - [ ] Responsive horizontal scrolling for many players
-    - [ ] High contrast for outdoor/bright light visibility
-- [ ] **Game Lifecycle**
-    - [ ] "Keep screen awake" functionality
-    - [ ] Option to finish game and view final results
+- [x] **Game Initialization**
+    - [x] Select a game template
+    - [x] Select players for the session
+- [x] **Score Entry Table**
+    - [x] Table layout: Players across top, rounds down the side
+    - [x] Input cells: Large touch-friendly targets
+    - [x] Keyboard support: Numeric keyboard triggered by default on mobile
+    - [x] Navigation: Pressing 'Enter' moves focus to the next cell
+- [x] **Real-time Feedback**
+    - [x] Sticky footer showing total scores per player
+    - [x] Responsive horizontal scrolling for many players
+    - [x] High contrast for outdoor/bright light visibility
+- [x] **Game Lifecycle**
+    - [x] "Keep screen awake" functionality
+    - [x] Option to finish game and view final results
 
 ### Phase 5: Dashboard & Polish
 - [ ] **Home Screen Dashboard**

@@ -23,6 +23,11 @@ const router = createRouter({
       path: '/game-templates',
       name: 'game-templates',
       component: () => import('../views/GameTemplatesView.vue')
+    },
+    {
+      path: '/play',
+      name: 'play',
+      component: () => import('../views/PlayView.vue')
     }
   ]
 })
