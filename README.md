@@ -6,7 +6,7 @@ An app to keep score while playing various board and card games.
 ### Phase 1: Project Setup & Foundation
 - [x] Initialize project as a Single Page Application (SPA) using Vue.js
 - [x] Set up basic routing
-- [x] Basic styling framework/layout
+- [x] Basic styling framework/layout (Mobile-first approach)
 
 ### Phase 2: Core Data Management
 - [ ] **Player Management**
@@ -25,11 +25,13 @@ An app to keep score while playing various board and card games.
     - [ ] Select players for the session
 - [ ] **Score Entry Table**
     - [ ] Table layout: Players across top, rounds down the side
-    - [ ] Input cells: Number fields with numeric keyboard support
+    - [ ] Input cells: Large touch-friendly targets
+    - [ ] Keyboard support: Numeric keyboard triggered by default on mobile
     - [ ] Navigation: Pressing 'Enter' moves focus to the next cell
 - [ ] **Real-time Feedback**
     - [ ] Sticky footer showing total scores per player
     - [ ] Responsive horizontal scrolling for many players
+    - [ ] High contrast for outdoor/bright light visibility
 - [ ] **Game Lifecycle**
     - [ ] "Keep screen awake" functionality
     - [ ] Option to finish game and view final results
@@ -37,7 +39,7 @@ An app to keep score while playing various board and card games.
 ### Phase 4: Persistence & Offline Support
 - [ ] Implement local data persistence (LocalStorage or IndexedDB)
 - [ ] PWA Setup
-    - [ ] Web Manifest for "Add to Home Screen"
+    - [ ] Web Manifest for "Add to Home Screen" (with mobile icons and splash screens)
     - [ ] Service Worker for offline availability
 
 ### Phase 5: Dashboard & Polish
@@ -45,7 +47,7 @@ An app to keep score while playing various board and card games.
     - [ ] Last 5 games played (Name, date, winner)
     - [ ] Quick-start most recent game settings
     - [ ] Top 5 players (by games played)
-- [ ] Final UI/UX refinements
+- [ ] Final UI/UX refinements (Mobile-first optimization)
 
 ### Phase 6: Deployment
 - [ ] Configure for Firebase Hosting
