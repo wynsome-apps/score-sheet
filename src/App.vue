@@ -2,6 +2,8 @@
   <header>
     <nav>
       <RouterLink to="/">Home</RouterLink> |
+      <RouterLink to="/players">Players</RouterLink> |
+      <RouterLink to="/game-templates">Templates</RouterLink> |
       <RouterLink to="/about">About</RouterLink>
     </nav>
   </header>

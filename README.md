@@ -9,15 +9,15 @@ An app to keep score while playing various board and card games.
 - [x] Basic styling framework/layout (Mobile-first approach)
 
 ### Phase 2: Core Data Management
-- [ ] **Player Management**
-    - [ ] List existing players
-    - [ ] Add new players
-    - [ ] Edit/Delete players
-- [ ] **Game Settings Management**
-    - [ ] List game templates
-    - [ ] Create/Edit game settings:
-        - [ ] Game Name
-        - [ ] Scoring type (Normal vs. Reverse)
+- [x] **Player Management**
+    - [x] List existing players
+    - [x] Add new players
+    - [x] Edit/Delete players
+- [x] **Game Templates Management**
+    - [x] List game templates
+    - [x] Create/Edit game templates:
+        - [x] Game Name
+        - [x] Scoring type (Normal vs. Reverse)
 
 ### Phase 3: Scoring Interface (The Score Sheet)
 - [ ] **Game Initialization**
