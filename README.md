@@ -21,9 +21,9 @@ An app to keep score while playing various board and card games.
 
 ### Phase 3: Persistence & Offline Support
 - [x] Implement local data persistence (LocalStorage)
-- [ ] PWA Setup (Deferred)
-    - [ ] Web Manifest for "Add to Home Screen" (with mobile icons and splash screens)
-    - [ ] Service Worker for offline availability
+- [x] PWA Setup
+    - [x] Web Manifest for "Add to Home Screen" (with mobile icons and splash screens)
+    - [x] Service Worker for offline availability
 
 ### Phase 4: Scoring Interface (The Score Sheet)
 - [x] **Game Initialization**

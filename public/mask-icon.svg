@@ -1,0 +1,45 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Grid Background -->
+  <rect x="10" y="10" width="180" height="180" rx="10" fill="#f0fdf4" stroke="#42b883" stroke-width="2"/>
+  <line x1="100" y1="10" x2="100" y2="190" stroke="#42b883" stroke-width="2"/>
+  <line x1="10" y1="100" x2="190" y2="100" stroke="#42b883" stroke-width="2"/>
+
+  <!-- Top Left: Meeple 1 (Brand Green) -->
+  <g transform="translate(43, 25) scale(0.6)">
+    <path d="M35 15C35 23.2843 28.2843 30 20 30C11.7157 30 5 23.2843 5 15C5 6.71573 11.7157 0 20 0C28.2843 0 35 6.71573 35 15Z" fill="#42b883"/>
+    <path d="M20 35C10 35 0 45 0 60V100H15L20 80L25 100H40V60C40 45 30 35 20 35Z" fill="#42b883"/>
+  </g>
+  <!-- Top Right: Meeple 2 (Secondary Color - Blue) -->
+  <g transform="translate(133, 25) scale(0.6)">
+    <path d="M35 15C35 23.2843 28.2843 30 20 30C11.7157 30 5 23.2843 5 15C5 6.71573 11.7157 0 20 0C28.2843 0 35 6.71573 35 15Z" fill="#35495e"/>
+    <path d="M20 35C10 35 0 45 0 60V100H15L20 80L25 100H40V60C40 45 30 35 20 35Z" fill="#35495e"/>
+  </g>
+
+  <!-- Bottom Left: Pair of Dice -->
+  <g transform="translate(25, 120) scale(0.8)">
+    <!-- Die 1 -->
+    <rect x="5" y="5" width="40" height="40" rx="5" fill="#42b883"/>
+    <circle cx="15" cy="15" r="3" fill="white"/>
+    <circle cx="35" cy="35" r="3" fill="white"/>
+    <circle cx="25" cy="25" r="3" fill="white"/>
+    
+    <!-- Die 2 -->
+    <rect x="35" y="35" width="40" height="40" rx="5" fill="#35495e"/>
+    <circle cx="45" cy="45" r="3" fill="white"/>
+    <circle cx="65" cy="65" r="3" fill="white"/>
+    <circle cx="45" cy="65" r="3" fill="white"/>
+    <circle cx="65" cy="45" r="3" fill="white"/>
+  </g>
+
+  <!-- Bottom Right: Hand of playing cards -->
+  <g transform="translate(115, 115) scale(0.8)">
+    <!-- Card 1 (Back) -->
+    <rect x="5" y="15" width="40" height="60" rx="4" fill="#35495e" transform="rotate(-15, 25, 45)"/>
+    <!-- Card 2 (Front) -->
+    <rect x="15" y="10" width="40" height="60" rx="4" fill="white" stroke="#42b883" stroke-width="2"/>
+    <text x="20" y="25" font-family="Arial" font-size="12" fill="#42b883">A</text>
+    <path d="M35 40 L40 30 L45 40 L40 50 Z" fill="#42b883"/> <!-- Diamond suit -->
+    <!-- Card 3 (Middle) -->
+    <rect x="25" y="15" width="40" height="60" rx="4" fill="#42b883" transform="rotate(15, 45, 45)"/>
+  </g>
+</svg>

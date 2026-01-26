@@ -91,6 +91,11 @@ function quickStart(game) {
       <p>Welcome! Start your first game to see your history and stats here.</p>
       <RouterLink to="/play" class="btn-start">Get Started</RouterLink>
     </div>
+
+    <footer class="dashboard-footer">
+      <p>Created by</p>
+      <img src="../assets/wynsome-creations@100h.png" alt="Wynsome Creations Logo" class="wynsome-logo" />
+    </footer>
   </div>
 </template>
 
@@ -285,6 +290,35 @@ function quickStart(game) {
   }
   .separator {
     color: #444;
+  }
+}
+
+.dashboard-footer {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid #dee2e6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #6c757d;
+  font-size: 0.9rem;
+
+  p {
+    padding: 0;
+    margin: 0;
+    margin-bottom: -1rem;
+  }
+}
+
+.wynsome-logo {
+  height: 100px;
+  width: auto;
+}
+
+@media (prefers-color-scheme: dark) {
+  .dashboard-footer {
+    border-top-color: #333;
+    color: #aaa;
   }
 }
 </style>
