@@ -202,6 +202,11 @@ function onKeydown(rIdx, pIdx, event) {
   max-width: 100%;
 }
 
+h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
 .setup-section {
   margin-bottom: 2rem;
 }
