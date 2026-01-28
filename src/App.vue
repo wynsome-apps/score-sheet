@@ -3,17 +3,24 @@ import { computed } from 'vue'
 import { RouterLink, RouterView, useRoute } from 'vue-router'
 import SvgIcon from '@jamescoyle/vue-icon'
 import { mdiHome, mdiPlayCircle, mdiAccountGroup, mdiCardsPlayingOutline } from '@mdi/js'
+import { useGameSessionStore } from './stores/gameSession'
 
 const route = useRoute()
+const sessionStore = useGameSessionStore()
+
 const isPlayScreen = computed(() => route.path === '/play')
+const showNav = computed(() => {
+  if (route.path !== '/play') return true
+  return !sessionStore.activeGame
+})
 </script>
 
 <template>
-  <main :class="{ 'is-play-screen': isPlayScreen }">
+  <main :class="{ 'is-play-screen': isPlayScreen, 'hide-nav': !showNav }">
     <RouterView />
   </main>
 
-  <nav v-if="!isPlayScreen" class="bottom-nav">
+  <nav v-if="showNav" class="bottom-nav">
     <RouterLink to="/" class="nav-item">
       <svg-icon type="mdi" :path="mdiHome"></svg-icon>
       <span class="nav-label">Home</span>
@@ -44,6 +51,10 @@ main {
 
 main.is-play-screen {
   min-height: 100vh;
+  padding-bottom: 80px; /* Still need space for nav during setup */
+}
+
+main.hide-nav {
   padding-bottom: 1.5rem;
 }
 
@@ -92,7 +103,7 @@ main.is-play-screen {
     padding: 1rem;
     padding-bottom: 80px;
   }
-  main.is-play-screen {
+  main.hide-nav {
     padding-bottom: 1rem;
   }
 }
