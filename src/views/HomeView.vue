@@ -107,7 +107,7 @@ function quickStart(game) {
 }
 
 .active-game-banner {
-  background-color: #42b883;
+  background-color: var(--color-primary);
   color: white;
   padding: 1rem;
   border-radius: 8px;
@@ -120,7 +120,7 @@ function quickStart(game) {
 
 .btn-resume {
   background-color: white;
-  color: #42b883;
+  color: var(--color-primary);
   padding: 0.5rem 1rem;
   border-radius: 4px;
   text-decoration: none;
@@ -130,6 +130,7 @@ function quickStart(game) {
 .dashboard-section h2 {
   margin: 0;
   font-size: 1.5rem;
+  color: var(--color-dark);
 }
 
 .section-header {
@@ -137,7 +138,7 @@ function quickStart(game) {
   justify-content: space-between;
   align-items: baseline;
   margin-bottom: 1rem;
-  border-bottom: 1px solid #dee2e6;
+  border-bottom: 1px solid var(--color-border);
   padding-bottom: 0.5rem;
   flex-wrap: wrap;
   gap: 0.5rem;
@@ -146,7 +147,7 @@ function quickStart(game) {
 .header-link {
   font-size: 0.9rem;
   font-weight: 500;
-  color: #42b883;
+  color: var(--color-secondary);
 }
 
 .header-links {
@@ -156,7 +157,7 @@ function quickStart(game) {
 }
 
 .separator {
-  color: #dee2e6;
+  color: var(--color-border);
   font-size: 0.8rem;
 }
 
@@ -171,19 +172,20 @@ function quickStart(game) {
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  background-color: #f8f9fa;
+  background-color: var(--color-gray-light);
   border-radius: 8px;
-  border: 1px solid #dee2e6;
+  border: 1px solid var(--color-border);
 }
 
 .game-info h3 {
   margin: 0;
   font-size: 1.2rem;
+  color: var(--color-dark);
 }
 
 .game-date {
   font-size: 0.85rem;
-  color: #6c757d;
+  color: var(--color-gray);
   margin: 0.25rem 0;
 }
 
@@ -224,10 +226,11 @@ function quickStart(game) {
 
 .player-name {
   font-weight: 500;
+  color: var(--color-dark);
 }
 
 .player-count {
-  color: #6c757d;
+  color: var(--color-gray);
 }
 
 .action-buttons {
@@ -240,7 +243,7 @@ function quickStart(game) {
   display: block;
   text-align: center;
   padding: 0.8rem;
-  background-color: #42b883;
+  background-color: var(--color-primary);
   color: white;
   text-decoration: none;
   border-radius: 6px;
@@ -248,13 +251,13 @@ function quickStart(game) {
 }
 
 .action-btn.secondary {
-  background-color: #6c757d;
+  background-color: var(--color-secondary);
 }
 
 .welcome-message {
   text-align: center;
   padding: 3rem 1rem;
-  background-color: #f8f9fa;
+  background-color: var(--color-gray-light);
   border-radius: 12px;
 }
 
@@ -262,7 +265,7 @@ function quickStart(game) {
   display: inline-block;
   margin-top: 1rem;
   padding: 0.75rem 2rem;
-  background-color: #42b883;
+  background-color: var(--color-primary);
   color: white;
   text-decoration: none;
   border-radius: 6px;
@@ -270,9 +273,12 @@ function quickStart(game) {
 }
 
 @media (prefers-color-scheme: dark) {
+  .dashboard-section h2, .game-info h3, .player-name {
+    color: var(--color-white);
+  }
   .game-card, .welcome-message {
     background-color: #2a2a2a;
-    border-color: #444;
+    border-color: var(--color-gray-dark);
   }
   .game-date, .player-count {
     color: #aaa;
@@ -283,24 +289,24 @@ function quickStart(game) {
     color: white;
   }
   .stats-list li {
-    border-bottom-color: #333;
+    border-bottom-color: var(--color-gray-dark);
   }
   .section-header {
-    border-bottom-color: #444;
+    border-bottom-color: var(--color-gray-dark);
   }
   .separator {
-    color: #444;
+    color: var(--color-gray-dark);
   }
 }
 
 .dashboard-footer {
   margin-top: 3rem;
   padding-top: 2rem;
-  border-top: 1px solid #dee2e6;
+  border-top: 1px solid var(--color-border);
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: #6c757d;
+  color: var(--color-gray);
   font-size: 0.9rem;
 
   p {
@@ -317,7 +323,7 @@ function quickStart(game) {
 
 @media (prefers-color-scheme: dark) {
   .dashboard-footer {
-    border-top-color: #333;
+    border-top-color: var(--color-gray-dark);
     color: #aaa;
   }
 }

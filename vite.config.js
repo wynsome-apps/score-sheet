@@ -16,7 +16,7 @@ export default defineConfig({
         name: 'Score Sheet',
         short_name: 'ScoreSheet',
         description: 'Keep score for board and card games',
-        theme_color: '#42b883',
+        theme_color: '#AA4465',
         icons: [
           {
             src: 'pwa-192x192.png',

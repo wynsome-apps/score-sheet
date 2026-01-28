@@ -81,16 +81,17 @@ const deletePlayer = (id) => {
 }
 
 section {
-  background-color: #f8f9fa;
+  background-color: var(--color-gray-light);
   padding: 1.5rem;
   border-radius: 8px;
-  border: 1px solid #dee2e6;
+  border: 1px solid var(--color-border);
 }
 
 h2 {
   margin-top: 0;
   margin-bottom: 1rem;
   font-size: 1.25rem;
+  color: var(--color-dark);
 }
 
 form {
@@ -100,7 +101,7 @@ form {
 
 input {
   padding: 0.75rem;
-  border: 1px solid #ccc;
+  border: 1px solid var(--color-border);
   border-radius: 4px;
   flex-grow: 1;
   font-size: 1rem;
@@ -132,14 +133,17 @@ li:last-child {
 }
 
 .delete-btn {
-  background-color: #e74c3c;
+  background-color: var(--color-secondary);
   color: white;
 }
 
 @media (prefers-color-scheme: dark) {
+  h2 {
+    color: var(--color-white);
+  }
   section {
     background-color: #2a2a2a;
-    border-color: #444;
+    border-color: var(--color-gray-dark);
   }
   li {
     border-bottom-color: #333;

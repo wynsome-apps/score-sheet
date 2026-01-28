@@ -53,8 +53,8 @@ main.is-play-screen {
   left: 0;
   right: 0;
   height: 64px;
-  background-color: #ffffff;
-  border-top: 1px solid #dee2e6;
+  background-color: var(--color-white);
+  border-top: 1px solid var(--color-border);
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -66,7 +66,7 @@ main.is-play-screen {
   flex-direction: column;
   align-items: center;
   text-decoration: none;
-  color: #6c757d;
+  color: var(--color-gray);
   flex: 1;
   padding: 8px 0;
 }
@@ -77,13 +77,13 @@ main.is-play-screen {
 }
 
 .router-link-active {
-  color: #42b883;
+  color: var(--color-primary);
 }
 
 @media (prefers-color-scheme: dark) {
   .bottom-nav {
     background-color: #1a1a1a;
-    border-top-color: #333;
+    border-top-color: var(--color-gray-dark);
   }
 }
 

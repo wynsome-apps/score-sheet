@@ -351,7 +351,7 @@ h1 {
 
 .template-card, .player-card {
   padding: 1rem;
-  border: 2px solid #ddd;
+  border: 2px solid var(--color-border);
   border-radius: 8px;
   cursor: pointer;
   text-align: center;
@@ -359,18 +359,19 @@ h1 {
 }
 
 .template-card.active, .player-card.active {
-  border-color: #42b883;
-  background-color: rgba(66, 184, 131, 0.1);
+  border-color: var(--color-primary);
+  background-color: rgba(170, 68, 101, 0.1);
 }
 
 .template-card h3 {
   margin: 0 0 0.5rem 0;
+  color: var(--color-dark);
 }
 
 .template-card p {
   margin: 0;
   font-size: 0.8rem;
-  color: #666;
+  color: var(--color-gray);
 }
 
 .start-button {
@@ -378,7 +379,7 @@ h1 {
   width: 100%;
   padding: 1rem;
   font-size: 1.2rem;
-  background-color: #42b883;
+  background-color: var(--color-primary);
   color: white;
   border: none;
   border-radius: 8px;
@@ -386,7 +387,7 @@ h1 {
 }
 
 .start-button:disabled {
-  background-color: #ccc;
+  background-color: var(--color-border);
   cursor: not-allowed;
 }
 
@@ -409,9 +410,6 @@ h1 {
   max-height: calc(100dvh - 1rem);
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-  /* Clip prevents sticky headers from working if it creates a scroll container, 
-     but overflow-x: auto is usually fine. 
-     Using display: block on table-container and ensuring parents don't have overflow: hidden. */
 }
 
 table {
@@ -422,16 +420,17 @@ table {
 }
 
 th, td {
-  border: 1px solid #ddd;
+  border: 1px solid var(--color-border);
   padding: 8px;
   text-align: center;
 }
 
 th {
-  background-color: #f8f9fa;
+  background-color: var(--color-gray-light);
   position: sticky;
   top: 0;
   z-index: 10;
+  color: var(--color-dark);
 }
 
 thead tr:nth-child(2) th {
@@ -440,7 +439,7 @@ thead tr:nth-child(2) th {
 }
 
 .totals-header-row th {
-  background-color: #2c3e50;
+  background-color: var(--color-dark);
   color: white;
   font-size: 1.1rem;
 }
@@ -451,8 +450,9 @@ thead tr:nth-child(2) th {
 
 .round-col, .round-num {
   width: 40px;
-  background-color: #f8f9fa;
+  background-color: var(--color-gray-light);
   font-weight: bold;
+  color: var(--color-dark);
 }
 
 input {
@@ -467,40 +467,34 @@ input {
 }
 
 input:focus {
-  background-color: rgba(66, 184, 131, 0.1);
+  background-color: rgba(0, 175, 181, 0.1);
 }
 
 
 .btn-finish {
-  background-color: #42b883;
+  background-color: var(--color-primary);
   color: white;
 }
 
 .btn-cancel {
-  background-color: #e74c3c;
+  background-color: var(--color-secondary);
   color: white;
 }
 
 .finished input {
-  color: #888;
-}
-
-@media (prefers-color-scheme: light) {
-  .template-card p {
-    color: #666;
-  }
-  th, .round-num {
-    background-color: #f0f0f0;
-  }
+  color: var(--color-gray);
 }
 
 @media (prefers-color-scheme: dark) {
+  .template-card h3, th, .round-num {
+    color: var(--color-white);
+  }
   th, .round-num {
     background-color: #333;
   }
   .totals-header-row th {
     background-color: #1a1a1a;
-    border-color: #444;
+    border-color: var(--color-gray-dark);
   }
   .template-card p {
     color: #bbb;

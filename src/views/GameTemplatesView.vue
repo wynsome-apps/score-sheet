@@ -115,7 +115,7 @@ const deleteTemplate = (id) => {
 
 .add-btn {
   margin-bottom: 1rem;
-  background-color: #42b883;
+  background-color: var(--color-primary);
   color: white;
   width: 100%;
   padding: 1rem;
@@ -123,10 +123,10 @@ const deleteTemplate = (id) => {
 }
 
 section {
-  background-color: #f8f9fa;
+  background-color: var(--color-gray-light);
   padding: 1.5rem;
   border-radius: 8px;
-  border: 1px solid #dee2e6;
+  border: 1px solid var(--color-border);
 }
 
 ul {
@@ -136,7 +136,7 @@ ul {
 
 li {
   padding: 1rem 0;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--color-border);
 }
 
 li:last-child {
@@ -151,16 +151,16 @@ li:last-child {
 
 .scoring-type {
   font-size: 0.8rem;
-  color: #666;
+  color: var(--color-gray);
   margin-left: 0.5rem;
 }
 
 .form-container {
   padding: 1.5rem;
-  border: 1px solid #dee2e6;
+  border: 1px solid var(--color-border);
   border-radius: 8px;
-  background-color: #f8f9fa;
-  color: #213547;
+  background-color: var(--color-gray-light);
+  color: var(--color-dark);
 }
 
 .form-group {
@@ -186,7 +186,7 @@ label {
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem;
-  border: 1px solid #ccc;
+  border: 1px solid var(--color-border);
   border-radius: 4px;
   background: white;
   cursor: pointer;
@@ -194,7 +194,7 @@ label {
 
 input[id="name"] {
   padding: 0.75rem;
-  border: 1px solid #ccc;
+  border: 1px solid var(--color-border);
   border-radius: 4px;
   font-size: 1rem;
 }
@@ -211,7 +211,7 @@ input[id="name"] {
 }
 
 button[type="submit"] {
-  background-color: #42b883;
+  background-color: var(--color-primary);
   color: white;
 }
 
@@ -221,7 +221,7 @@ button[type="submit"] {
 }
 
 .delete-btn {
-  background-color: #e74c3c;
+  background-color: var(--color-secondary);
   color: white;
 }
 
@@ -229,7 +229,7 @@ button[type="submit"] {
   section, .form-container {
     background-color: #2a2a2a;
     color: rgba(255, 255, 255, 0.87);
-    border-color: #444;
+    border-color: var(--color-gray-dark);
   }
   
   .scoring-type {
@@ -237,7 +237,7 @@ button[type="submit"] {
   }
 
   li {
-    border-bottom-color: #333;
+    border-bottom-color: var(--color-gray-dark);
   }
 
   .radio-group label {

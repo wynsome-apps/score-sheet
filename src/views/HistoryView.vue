@@ -82,7 +82,7 @@ function goBack() {
   border: none;
   padding: 0.5rem;
   font-size: 1rem;
-  color: #42b883;
+  color: var(--color-primary);
   cursor: pointer;
 }
 
@@ -97,9 +97,9 @@ function goBack() {
   justify-content: space-between;
   align-items: flex-start;
   padding: 1.25rem;
-  background-color: #f8f9fa;
+  background-color: var(--color-gray-light);
   border-radius: 8px;
-  border: 1px solid #dee2e6;
+  border: 1px solid var(--color-border);
   gap: 1rem;
 }
 
@@ -110,11 +110,12 @@ function goBack() {
 .game-info h3 {
   margin: 0;
   font-size: 1.2rem;
+  color: var(--color-dark);
 }
 
 .game-date {
   font-size: 0.85rem;
-  color: #6c757d;
+  color: var(--color-gray);
   margin: 0.25rem 0 0.75rem 0;
 }
 
@@ -130,7 +131,8 @@ function goBack() {
 
 .player-pill {
   font-size: 0.8rem;
-  background-color: #e9ecef;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
   padding: 0.2rem 0.5rem;
   border-radius: 4px;
 }
@@ -148,7 +150,7 @@ function goBack() {
 .empty-state {
   text-align: center;
   padding: 3rem 1rem;
-  background-color: #f8f9fa;
+  background-color: var(--color-gray-light);
   border-radius: 12px;
 }
 
@@ -156,7 +158,7 @@ function goBack() {
   display: inline-block;
   margin-top: 1rem;
   padding: 0.75rem 2rem;
-  background-color: #42b883;
+  background-color: var(--color-primary);
   color: white;
   text-decoration: none;
   border-radius: 6px;
@@ -164,9 +166,12 @@ function goBack() {
 }
 
 @media (prefers-color-scheme: dark) {
+  .game-info h3 {
+    color: var(--color-white);
+  }
   .game-card, .empty-state {
     background-color: #2a2a2a;
-    border-color: #444;
+    border-color: var(--color-gray-dark);
   }
   .game-date {
     color: #aaa;
@@ -174,6 +179,7 @@ function goBack() {
   .player-pill {
     background-color: #333;
     color: #ccc;
+    border-color: var(--color-gray-dark);
   }
   .btn-replay {
     background-color: #333;
