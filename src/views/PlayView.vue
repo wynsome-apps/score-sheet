@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
 import { usePlayerStore } from '../stores/players'
 import { useGameTemplatesStore } from '../stores/gameTemplates'
 import { useGameSessionStore } from '../stores/gameSession'
@@ -12,6 +12,39 @@ const selectedTemplateId = ref(templateStore.templates[0]?.id || '')
 const selectedPlayerIds = ref([])
 
 const activeGame = computed(() => sessionStore.activeGame)
+
+const visibleRounds = computed(() => {
+  if (!activeGame.value) return []
+  const rounds = activeGame.value.rounds
+    .map((round, index) => ({ round, index }))
+    .filter(({ round, index }) => {
+      // Show the round if it's not empty
+      const isEmpty = round.every(score => score === null || score === '')
+      return !isEmpty
+    })
+  
+  // Always ensure there is at least one empty row at the end for input
+  // OR if there are no rounds at all, add one.
+  // Actually, sessionStore.updateScore adds a new round when the last one is full.
+  // We should always show the last round if it's the only round OR if the previous one is full.
+  const lastRoundIdx = activeGame.value.rounds.length - 1
+  const lastRound = activeGame.value.rounds[lastRoundIdx]
+  const lastRoundIsEmpty = lastRound.every(score => score === null || score === '')
+  
+  if (lastRoundIsEmpty) {
+    // If the last round is empty, we check if we should show it.
+    // We show it if it's the only round OR if there are no other visible rounds.
+    if (rounds.length === 0 || rounds[rounds.length - 1].index !== lastRoundIdx) {
+      rounds.push({ round: lastRound, index: lastRoundIdx })
+    }
+  } else {
+    // If the last round is NOT empty, it means sessionStore should have added a new one,
+    // but let's be safe: if the last round is full, there SHOULD be another empty one.
+    // sessionStore.updateScore adds it.
+  }
+
+  return rounds
+})
 
 let wakeLock = null
 
@@ -63,8 +96,42 @@ function startGame() {
   }
 }
 
-function updateScore(rIdx, pIdx, event) {
-  sessionStore.updateScore(rIdx, pIdx, event.target.value)
+async function updateScore(rIdx, pIdx, event) {
+  const value = event.target.value
+  sessionStore.updateScore(rIdx, pIdx, value)
+  
+  // If the cell was cleared, it might cause the row to be hidden
+  if (value === '') {
+    // Wait for the row to be hidden by visibleRounds computed property
+    await nextTick()
+    const isStillVisible = visibleRounds.value.some(vr => vr.index === rIdx)
+    if (!isStillVisible && activeGame.value) {
+      // If the row disappeared because it became empty, move focus to the nearest visible row
+      const prevVisibleRounds = visibleRounds.value.filter(vr => vr.index < rIdx)
+      if (prevVisibleRounds.length > 0) {
+        const lastVisibleRound = prevVisibleRounds[prevVisibleRounds.length - 1]
+        const prevRIdx = lastVisibleRound.index
+        const lastPIdx = activeGame.value.players.length - 1
+        const prevId = `score-${prevRIdx}-${lastPIdx}`
+        const prevEl = document.getElementById(prevId)
+        if (prevEl) {
+          prevEl.focus()
+          setTimeout(() => prevEl.select(), 0)
+        }
+      } else {
+        const nextVisibleRounds = visibleRounds.value.filter(vr => vr.index > rIdx)
+        if (nextVisibleRounds.length > 0) {
+          const nextRIdx = nextVisibleRounds[0].index
+          const nextId = `score-${nextRIdx}-0`
+          const nextEl = document.getElementById(nextId)
+          if (nextEl) {
+            nextEl.focus()
+            setTimeout(() => nextEl.select(), 0)
+          }
+        }
+      }
+    }
+  }
 }
 
 function finishGame() {
@@ -82,19 +149,83 @@ function cancelGame() {
 function onKeydown(rIdx, pIdx, event) {
   if (event.key === 'Enter') {
     event.preventDefault()
-    // Find next cell
+    // Find next cell in visible rounds
+    let currentVisibleIdx = visibleRounds.value.findIndex(vr => vr.index === rIdx)
+    
+    if (currentVisibleIdx === -1) {
+      // If current row is hidden, find the first visible row after it
+      currentVisibleIdx = visibleRounds.value.findIndex(vr => vr.index > rIdx)
+      if (currentVisibleIdx === -1) return
+      
+      const nextRIdx = visibleRounds.value[currentVisibleIdx].index
+      const nextId = `score-${nextRIdx}-0`
+      const nextEl = document.getElementById(nextId)
+      if (nextEl) nextEl.focus()
+      return
+    }
+
     let nextPIdx = pIdx + 1
-    let nextRIdx = rIdx
+    let nextVisibleIdx = currentVisibleIdx
     
     if (nextPIdx >= sessionStore.activeGame.players.length) {
       nextPIdx = 0
-      nextRIdx = rIdx + 1
+      nextVisibleIdx = currentVisibleIdx + 1
     }
     
-    const nextId = `score-${nextRIdx}-${nextPIdx}`
-    const nextEl = document.getElementById(nextId)
-    if (nextEl) {
-      nextEl.focus()
+    if (nextVisibleIdx < visibleRounds.value.length) {
+      const nextRIdx = visibleRounds.value[nextVisibleIdx].index
+      const nextId = `score-${nextRIdx}-${nextPIdx}`
+      const nextEl = document.getElementById(nextId)
+      if (nextEl) {
+        nextEl.focus()
+      }
+    }
+  } else if (event.key === 'Backspace') {
+    if (event.target.value === '') {
+      event.preventDefault()
+      // Find previous cell in visible rounds
+      let currentVisibleIdx = visibleRounds.value.findIndex(vr => vr.index === rIdx)
+      
+      if (currentVisibleIdx === -1) {
+        // If current row is hidden, find the last visible row before it
+        const prevVisibleRounds = visibleRounds.value.filter(vr => vr.index < rIdx)
+        if (prevVisibleRounds.length === 0) return
+        
+        const lastVisibleRound = prevVisibleRounds[prevVisibleRounds.length - 1]
+        const prevRIdx = lastVisibleRound.index
+        const prevPIdx = sessionStore.activeGame.players.length - 1
+        const prevId = `score-${prevRIdx}-${prevPIdx}`
+        const prevEl = document.getElementById(prevId)
+        if (prevEl) {
+          prevEl.focus()
+          setTimeout(() => prevEl.select(), 0)
+        }
+        return
+      }
+
+      let prevPIdx = pIdx - 1
+      let prevVisibleIdx = currentVisibleIdx
+      
+      if (prevPIdx < 0) {
+        if (currentVisibleIdx > 0) {
+          prevPIdx = sessionStore.activeGame.players.length - 1
+          prevVisibleIdx = currentVisibleIdx - 1
+        } else {
+          // Already at the first visible cell
+          return
+        }
+      }
+      
+      const prevRIdx = visibleRounds.value[prevVisibleIdx].index
+      const prevId = `score-${prevRIdx}-${prevPIdx}`
+      const prevEl = document.getElementById(prevId)
+      if (prevEl) {
+        prevEl.focus()
+        // Highlight value
+        setTimeout(() => {
+          prevEl.select()
+        }, 0)
+      }
     }
   }
 }
@@ -174,8 +305,8 @@ function onKeydown(rIdx, pIdx, event) {
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(round, rIdx) in activeGame.rounds" :key="rIdx">
-              <td class="round-num">{{ rIdx + 1 }}</td>
+            <tr v-for="({ round, index: rIdx }, vIdx) in visibleRounds" :key="rIdx">
+              <td class="round-num">{{ vIdx + 1 }}</td>
               <td v-for="(score, pIdx) in round" :key="pIdx">
                 <input 
                   :id="`score-${rIdx}-${pIdx}`"
