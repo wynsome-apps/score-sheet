@@ -1,15 +1,19 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
+import { computed } from 'vue'
+import { RouterLink, RouterView, useRoute } from 'vue-router'
 import SvgIcon from '@jamescoyle/vue-icon'
 import { mdiHome, mdiPlayCircle, mdiAccountGroup, mdiCardsPlayingOutline } from '@mdi/js'
+
+const route = useRoute()
+const isPlayScreen = computed(() => route.path === '/play')
 </script>
 
 <template>
-  <main>
+  <main :class="{ 'is-play-screen': isPlayScreen }">
     <RouterView />
   </main>
 
-  <nav class="bottom-nav">
+  <nav v-if="!isPlayScreen" class="bottom-nav">
     <RouterLink to="/" class="nav-item">
       <svg-icon type="mdi" :path="mdiHome"></svg-icon>
       <span class="nav-label">Home</span>
@@ -36,6 +40,11 @@ main {
   margin: 0 auto;
   min-height: calc(100vh - 70px);
   padding-bottom: 80px; /* Space for bottom nav */
+}
+
+main.is-play-screen {
+  min-height: 100vh;
+  padding-bottom: 1.5rem;
 }
 
 .bottom-nav {
@@ -82,6 +91,9 @@ main {
   main {
     padding: 1rem;
     padding-bottom: 80px;
+  }
+  main.is-play-screen {
+    padding-bottom: 1rem;
   }
 }
 </style>

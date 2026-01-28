@@ -166,6 +166,12 @@ function onKeydown(rIdx, pIdx, event) {
                 {{ player.name }}
               </th>
             </tr>
+            <tr class="totals-header-row">
+              <th class="round-col">Σ</th>
+              <th v-for="(total, idx) in sessionStore.totals" :key="idx" class="total-header-value">
+                {{ total }}
+              </th>
+            </tr>
           </thead>
           <tbody>
             <tr v-for="(round, rIdx) in activeGame.rounds" :key="rIdx">
@@ -187,14 +193,6 @@ function onKeydown(rIdx, pIdx, event) {
         </table>
       </div>
 
-      <div class="sticky-footer">
-        <div class="totals-row">
-          <div class="total-label">Total</div>
-          <div v-for="(total, idx) in sessionStore.totals" :key="idx" class="total-value">
-            {{ total }}
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </template>
@@ -272,14 +270,18 @@ function onKeydown(rIdx, pIdx, event) {
 }
 
 .table-container {
+  max-height: calc(100dvh - 1rem);
   overflow-x: auto;
-  margin-bottom: 5rem; /* Space for sticky footer */
   -webkit-overflow-scrolling: touch;
+  /* Clip prevents sticky headers from working if it creates a scroll container, 
+     but overflow-x: auto is usually fine. 
+     Using display: block on table-container and ensuring parents don't have overflow: hidden. */
 }
 
 table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate; /* Better for sticky borders */
+  border-spacing: 0;
   min-width: 300px;
 }
 
@@ -293,7 +295,22 @@ th {
   background-color: #f8f9fa;
   position: sticky;
   top: 0;
-  z-index: 1;
+  z-index: 10;
+}
+
+thead tr:nth-child(2) th {
+  top: 41px; /* Height of the first header row. Use a value that matches your design. */
+  z-index: 9;
+}
+
+.totals-header-row th {
+  background-color: #2c3e50;
+  color: white;
+  font-size: 1.1rem;
+}
+
+.total-header-value {
+  font-weight: bold;
 }
 
 .round-col, .round-num {
@@ -317,43 +334,6 @@ input:focus {
   background-color: rgba(66, 184, 131, 0.1);
 }
 
-.sticky-footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: #2c3e50;
-  color: white;
-  padding: 0.5rem 0;
-  box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-  z-index: 10;
-}
-
-.totals-row {
-  display: flex;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 0 2rem;
-}
-
-/* Match table column widths in totals-row */
-/* This is tricky without knowing column widths, 
-   but since they are dynamic we'll use a similar approach to table */
-.total-label {
-  width: 58px; /* Approx match for round-col + borders/padding */
-  flex-shrink: 0;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-}
-
-.total-value {
-  flex: 1;
-  text-align: center;
-  font-size: 1.3rem;
-  font-weight: bold;
-  border-left: 1px solid rgba(255,255,255,0.2);
-}
 
 .btn-finish {
   background-color: #42b883;
@@ -382,11 +362,12 @@ input:focus {
   th, .round-num {
     background-color: #333;
   }
+  .totals-header-row th {
+    background-color: #1a1a1a;
+    border-color: #444;
+  }
   .template-card p {
     color: #bbb;
-  }
-  .sticky-footer {
-    background-color: #1a1a1a;
   }
 }
 </style>
