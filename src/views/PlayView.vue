@@ -331,11 +331,19 @@ function onKeydown(rIdx, pIdx, event) {
 <style scoped>
 .play-container {
   max-width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 h1 {
   margin: 0;
   font-size: 2rem;
+}
+
+.setup-screen {
+  flex: 1;
+  overflow-y: auto;
 }
 
 .setup-section {
@@ -384,6 +392,7 @@ h1 {
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  margin-top: auto;
 }
 
 .start-button:disabled {
@@ -392,12 +401,19 @@ h1 {
 }
 
 /* Scoring Screen Styles */
+.scoring-screen {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0; /* Important for flex children scrolling */
+}
+
 .scoring-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
-  flex-wrap: wrap;
+  flex-shrink: 0;
   gap: 1rem;
 }
 
@@ -407,35 +423,39 @@ h1 {
 }
 
 .table-container {
-  max-height: calc(100dvh - 1rem);
-  overflow-x: auto;
+  flex: 1;
+  overflow: auto;
   -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--color-border);
 }
 
 table {
   width: 100%;
-  border-collapse: separate; /* Better for sticky borders */
+  border-collapse: separate;
   border-spacing: 0;
-  min-width: 300px;
 }
 
 th, td {
-  border: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  border-right: 1px solid var(--color-border);
   padding: 8px;
   text-align: center;
 }
 
+th:last-child, td:last-child {
+  border-right: none;
+}
+
 th {
   background-color: var(--color-gray-light);
-  position: sticky;
-  top: 0;
-  z-index: 10;
   color: var(--color-dark);
 }
 
-thead tr:nth-child(2) th {
-  top: 41px; /* Height of the first header row. Use a value that matches your design. */
-  z-index: 9;
+thead {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .totals-header-row th {

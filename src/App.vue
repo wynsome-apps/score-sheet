@@ -47,15 +47,19 @@ main {
   margin: 0 auto;
   min-height: calc(100vh - 70px);
   padding-bottom: 80px; /* Space for bottom nav */
+  box-sizing: border-box;
 }
 
 main.is-play-screen {
-  min-height: 100vh;
-  padding-bottom: 80px; /* Still need space for nav during setup */
+  min-height: 100dvh;
 }
 
 main.hide-nav {
   padding-bottom: 1.5rem;
+  height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .bottom-nav {
