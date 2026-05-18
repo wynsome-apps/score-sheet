@@ -1,39 +1,79 @@
-# Score Sheet - Agent Guidelines
+# Project Overview: Score Sheet
 
-## Overview
-An app to keep score while playing various board and card games. It's a Single Page Application (SPA) designed with a mobile-first approach and PWA support.
+A mobile-first Single Page Application (SPA) designed to track scores for various board and card games. It features player management, customizable game templates, real-time score calculation, and persistent game history.
 
-## Tech Stack
+## Technology Stack
 - **Framework:** Vue 3 (Composition API)
+- **Build Tool:** Vite
 - **State Management:** Pinia
 - **Routing:** Vue Router
-- **Build Tool:** Vite
-- **Icons:** Material Design Icons (`@mdi/js`) via `@jamescoyle/vue-icon`
-- **Deployment:** Firebase Hosting
-- **Persistence:** LocalStorage (handled within Pinia stores)
+- **PWA:** vite-plugin-pwa (offline support, manifest)
+- **Icons:** Material Design Icons (`@mdi/js`, `@jamescoyle/vue-icon`)
+- **Hosting:** Firebase Hosting
+- **Styling:** Vanilla CSS with custom color palette and dark mode support.
 
-## Project Structure
-- `src/stores/`: Pinia stores for state management (players, game sessions, templates, history).
-- `src/views/`: Main page components.
+## Key Features
+- **Player Management:** Add, edit, and delete players.
+- **Game Templates:** Define games with "Normal" (highest wins) or "Reverse" (lowest wins) scoring types.
+- **Score Tracking:** Touch-friendly table interface with automatic round management and real-time totals.
+- **Persistence:** LocalStorage is used for all data (players, templates, history, active session).
+- **Offline Support:** PWA functionality allows usage without an active internet connection.
+- **Screen Awake:** Uses the Screen Wake Lock API to prevent the device from sleeping during active games.
+
+## Directory Structure
+- `src/assets/`: Logos and static assets.
 - `src/components/`: Reusable Vue components.
-- `src/assets/`: Static assets like images and logos.
-- `public/`: Assets served directly (PWA icons, etc.).
+- `src/router/`: Route definitions (`index.js`).
+- `src/stores/`: Pinia stores for state management:
+  - `gameHistory.js`: Stores past game results.
+  - `gameSession.js`: Manages the active game session and scoring logic.
+  - `gameTemplates.js`: Manages game definitions.
+  - `players.js`: Manages the player roster.
+- `src/views/`: Main page components (Home, Play, Players, Games, History).
+- `src/style.css`: Global styles and CSS variables.
 
-## Coding Conventions
-- **Vue Components:** Use `<script setup>` syntax.
-- **State Management:** Use the functional/setup syntax for Pinia stores.
-- **Styling:**
-  - Follow a mobile-first responsive design.
-  - Use CSS variables for consistent styling.
-  - Support dark mode using `@media (prefers-color-scheme: dark)`.
-  - Use large, touch-friendly targets for mobile users.
-- **Persistence:** All relevant app state should be persisted to `localStorage` to support offline use and page refreshes.
+## Building and Running
 
-## Development & Deployment Commands
-- `npm run dev`: Start the development server.
-- `npm run build`: Build the project for production.
-- `npm run preview`: Preview the production build locally.
-- `npm run deploy`: Build and deploy to Firebase Hosting.
+### Development
+```bash
+npm run dev
+```
+Starts the Vite development server.
 
-## Offline & PWA
-The app uses `vite-plugin-pwa` for service worker management and manifest generation. Ensure that any new assets are added to the PWA configuration in `vite.config.js` if they need to be cached.
+### Production Build
+```bash
+npm run build
+```
+Generates the production-ready assets in the `dist/` directory.
+
+### Preview
+```bash
+npm run preview
+```
+Previews the production build locally.
+
+### Deployment
+```bash
+npm run deploy
+```
+Builds the project and deploys to Firebase Hosting.
+
+## Development Conventions
+- **Component Style:** Use `<script setup>` with the Vue 3 Composition API.
+- **State Management:** Keep logic in Pinia stores to ensure persistence and shared state across views.
+- **Styling:** Use CSS variables (defined in `style.css`) for consistent colors and spacing. Follow the mobile-first approach.
+- **Icons:** Prefer Material Design Icons from `@mdi/js`.
+- **Persistence:** Ensure new data types are correctly serialized/deserialized from LocalStorage in their respective stores.
+- **PWA:** Be mindful of service worker caching when adding new assets to `public/`.
+
+## Agentic Task Workflow
+- Identify type of task
+- If resolving bug...
+  - Attempt to reproduce bug on localhost dev site via browser MCP server (if available)
+  - If unable to reproduce the issue, ask the user if you should still continue with the task
+- If task is of a significant size, enter plan mode. 
+  - Small bugs can be resolved without plan mode.
+- Work on task and edit needed code
+- Test updates on localhost dev site via browser MCP server (if available)
+- Loop back to fix any issues
+- Present resolution to user (with a related programmer joke)
