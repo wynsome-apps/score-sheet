@@ -1,5 +1,7 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
+import SvgIcon from '@jamescoyle/vue-icon'
+import { mdiWhiteBalanceSunny } from '@mdi/js'
 import { usePlayerStore } from '../stores/players'
 import { useGameTemplatesStore } from '../stores/gameTemplates'
 import { useGameSessionStore } from '../stores/gameSession'
@@ -46,35 +48,81 @@ const visibleRounds = computed(() => {
   return rounds
 })
 
+const wakeLockSupported = 'wakeLock' in navigator
 let wakeLock = null
+// User intent: whether the screen should be kept awake. The actual lock can be
+// dropped by the browser (e.g. when the tab is hidden) while this stays true so
+// we can re-acquire it when the page comes back into focus.
+const wakeLockEnabled = ref(false)
+// Reflects whether we currently hold an active lock.
+const wakeLockActive = ref(false)
 
 async function requestWakeLock() {
-  if ('wakeLock' in navigator) {
-    try {
-      wakeLock = await navigator.wakeLock.request('screen')
-      console.log('Wake Lock is active')
-    } catch (err) {
-      console.error(`${err.name}, ${err.message}`)
-    }
+  if (!wakeLockSupported) return
+  try {
+    wakeLock = await navigator.wakeLock.request('screen')
+    wakeLockActive.value = true
+    // The browser releases the lock automatically when the page is hidden.
+    // Track that so the toggle reflects reality and we can re-acquire later.
+    wakeLock.addEventListener('release', () => {
+      wakeLockActive.value = false
+      wakeLock = null
+    })
+    console.log('Wake Lock is active')
+  } catch (err) {
+    wakeLockActive.value = false
+    console.error(`${err.name}, ${err.message}`)
   }
 }
 
-function releaseWakeLock() {
+async function releaseWakeLock() {
   if (wakeLock !== null) {
-    wakeLock.release()
+    await wakeLock.release()
     wakeLock = null
+    wakeLockActive.value = false
     console.log('Wake Lock released')
   }
 }
 
-onMounted(() => {
-  if (activeGame.value && !activeGame.value.isFinished) {
+// Enable keeping the screen awake (records intent + acquires the lock).
+function enableWakeLock() {
+  wakeLockEnabled.value = true
+  requestWakeLock()
+}
+
+// Disable keeping the screen awake (clears intent + releases the lock).
+function disableWakeLock() {
+  wakeLockEnabled.value = false
+  releaseWakeLock()
+}
+
+function toggleWakeLock() {
+  if (wakeLockEnabled.value) {
+    disableWakeLock()
+  } else {
+    enableWakeLock()
+  }
+}
+
+// Re-acquire the lock when returning to the app. The Wake Lock API drops the
+// lock whenever the page is hidden (tab switch, app switch on mobile), so we
+// must request it again once the page is visible and the user still wants it.
+function handleVisibilityChange() {
+  if (document.visibilityState === 'visible' && wakeLockEnabled.value && !wakeLockActive.value) {
     requestWakeLock()
+  }
+}
+
+onMounted(() => {
+  document.addEventListener('visibilitychange', handleVisibilityChange)
+  if (activeGame.value && !activeGame.value.isFinished) {
+    enableWakeLock()
   }
 })
 
 onUnmounted(() => {
-  releaseWakeLock()
+  document.removeEventListener('visibilitychange', handleVisibilityChange)
+  disableWakeLock()
 })
 
 function togglePlayer(playerId) {
@@ -92,7 +140,7 @@ function startGame() {
   
   if (template && players.length > 0) {
     sessionStore.startGame(template, players)
-    requestWakeLock()
+    enableWakeLock()
   }
 }
 
@@ -283,6 +331,17 @@ function onKeydown(rIdx, pIdx, event) {
       <div class="scoring-header">
         <h1>{{ activeGame.template.name }}</h1>
         <div class="header-actions">
+          <button
+            v-if="wakeLockSupported && !activeGame.isFinished"
+            class="btn-wake"
+            :class="{ active: wakeLockActive }"
+            @click="toggleWakeLock"
+            :title="wakeLockActive ? 'Screen stays awake' : 'Screen may sleep'"
+            :aria-label="wakeLockActive ? 'Disable keep screen awake' : 'Enable keep screen awake'"
+            :aria-pressed="wakeLockActive"
+          >
+            <svg-icon type="mdi" :path="mdiWhiteBalanceSunny"></svg-icon>
+          </button>
           <button v-if="!activeGame.isFinished" class="btn-finish" @click="finishGame">Finish Game</button>
           <button class="btn-cancel" @click="cancelGame">{{ activeGame.isFinished ? 'New Game' : 'Cancel' }}</button>
         </div>
@@ -490,6 +549,22 @@ input:focus {
   background-color: rgba(0, 175, 181, 0.1);
 }
 
+
+.btn-wake {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  background-color: var(--color-gray-light);
+  color: var(--color-gray);
+  border: 1px solid var(--color-border);
+}
+
+.btn-wake.active {
+  background-color: var(--color-secondary);
+  color: white;
+  border-color: var(--color-secondary);
+}
 
 .btn-finish {
   background-color: var(--color-primary);
