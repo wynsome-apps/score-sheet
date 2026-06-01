@@ -23,6 +23,11 @@ function quickStart(game) {
   router.push('/play')
 }
 
+function resumeGame(game) {
+  sessionStore.resumeGame(game)
+  router.push('/play')
+}
+
 function goBack() {
   router.push('/')
 }
@@ -43,8 +48,11 @@ function goBack() {
     <div v-else class="games-list">
       <div v-for="game in allGames" :key="game.id" class="game-card">
         <div class="game-info">
-          <h3>{{ game.template.name }}</h3>
-          <p class="game-date">{{ formatDate(game.endTime) }}</p>
+          <h3>
+            {{ game.template.name }}
+            <span v-if="!game.isFinished" class="in-progress-badge">In Progress</span>
+          </h3>
+          <p class="game-date">{{ formatDate(game.endTime || game.lastPlayedTime || game.startTime) }}</p>
           <div class="game-details">
             <p v-if="game.winner" class="game-winner">
               Winner: <strong>{{ game.winner.name }}</strong> ({{ game.winner.totalScore }})
@@ -56,8 +64,11 @@ function goBack() {
             </div>
           </div>
         </div>
-        <button @click="quickStart(game)" class="btn-replay">
+        <button v-if="game.isFinished" @click="quickStart(game)" class="btn-replay">
           Replay
+        </button>
+        <button v-else @click="resumeGame(game)" class="btn-resume">
+          Resume
         </button>
       </div>
     </div>
@@ -147,6 +158,31 @@ function goBack() {
   align-self: center;
 }
 
+.btn-resume {
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+  align-self: center;
+}
+
+.in-progress-badge {
+  display: inline-block;
+  margin-left: 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: white;
+  background-color: var(--color-secondary);
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  vertical-align: middle;
+}
+
 .empty-state {
   text-align: center;
   padding: 3rem 1rem;
@@ -193,7 +229,8 @@ function goBack() {
     flex-direction: column;
     align-items: stretch;
   }
-  .btn-replay {
+  .btn-replay,
+  .btn-resume {
     width: 100%;
     margin-top: 0.5rem;
   }

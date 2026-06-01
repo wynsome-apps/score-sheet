@@ -1,11 +1,13 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
+import { useRouter } from 'vue-router'
 import SvgIcon from '@jamescoyle/vue-icon'
-import { mdiWhiteBalanceSunny } from '@mdi/js'
+import { mdiWhiteBalanceSunny, mdiFlagCheckered, mdiExitToApp } from '@mdi/js'
 import { usePlayerStore } from '../stores/players'
 import { useGameTemplatesStore } from '../stores/gameTemplates'
 import { useGameSessionStore } from '../stores/gameSession'
 
+const router = useRouter()
 const playerStore = usePlayerStore()
 const templateStore = useGameTemplatesStore()
 const sessionStore = useGameSessionStore()
@@ -188,9 +190,10 @@ function finishGame() {
   }
 }
 
-function cancelGame() {
-  if (confirm('Are you sure you want to cancel this game? All progress will be lost.')) {
-    sessionStore.cancelGame()
+function exitGame() {
+  if (confirm('Exit and save this game? You can resume it later.')) {
+    sessionStore.exitGame()
+    router.push('/')
   }
 }
 
@@ -342,8 +345,14 @@ function onKeydown(rIdx, pIdx, event) {
           >
             <svg-icon type="mdi" :path="mdiWhiteBalanceSunny"></svg-icon>
           </button>
-          <button v-if="!activeGame.isFinished" class="btn-finish" @click="finishGame">Finish Game</button>
-          <button class="btn-cancel" @click="cancelGame">{{ activeGame.isFinished ? 'New Game' : 'Cancel' }}</button>
+          <button v-if="!activeGame.isFinished" class="btn-finish" @click="finishGame">
+            <svg-icon type="mdi" :path="mdiFlagCheckered"></svg-icon>
+            <span class="btn-label">Finish</span>
+          </button>
+          <button class="btn-cancel" @click="exitGame">
+            <svg-icon type="mdi" :path="mdiExitToApp"></svg-icon>
+            <span class="btn-label">Exit</span>
+          </button>
         </div>
       </div>
 
@@ -479,6 +488,24 @@ h1 {
 .header-actions {
   display: flex;
   gap: 0.5rem;
+}
+
+.header-actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+/* Mobile-first: show icons only. Labels appear on wider screens. */
+.btn-label {
+  display: none;
+}
+
+@media (min-width: 600px) {
+  .btn-label {
+    display: inline;
+  }
 }
 
 .table-container {

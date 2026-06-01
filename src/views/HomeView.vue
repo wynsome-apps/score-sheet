@@ -23,6 +23,11 @@ function quickStart(game) {
   sessionStore.startGame(template, players)
   router.push('/play')
 }
+
+function resumeGame(game) {
+  sessionStore.resumeGame(game)
+  router.push('/play')
+}
 </script>
 
 <template>
@@ -46,14 +51,20 @@ function quickStart(game) {
       <div class="games-list">
         <div v-for="game in lastFiveGames" :key="game.id" class="game-card">
           <div class="game-info">
-            <h3>{{ game.template.name }}</h3>
-            <p class="game-date">{{ formatDate(game.endTime) }}</p>
+            <h3>
+              {{ game.template.name }}
+              <span v-if="!game.isFinished" class="in-progress-badge">In Progress</span>
+            </h3>
+            <p class="game-date">{{ formatDate(game.endTime || game.lastPlayedTime || game.startTime) }}</p>
             <p v-if="game.winner" class="game-winner">
               Winner: <strong>{{ game.winner.name }}</strong> ({{ game.winner.totalScore }})
             </p>
           </div>
-          <button @click="quickStart(game)" class="btn-quick-start">
+          <button v-if="game.isFinished" @click="quickStart(game)" class="btn-quick-start">
             Replay
+          </button>
+          <button v-else @click="resumeGame(game)" class="btn-quick-start btn-resume-card">
+            Resume
           </button>
         </div>
       </div>
@@ -199,6 +210,26 @@ function quickStart(game) {
   padding: 0.5rem 1rem;
   border-radius: 4px;
   cursor: pointer;
+}
+
+.btn-quick-start.btn-resume-card {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: white;
+}
+
+.in-progress-badge {
+  display: inline-block;
+  margin-left: 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: white;
+  background-color: var(--color-secondary);
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  vertical-align: middle;
 }
 
 .dashboard-grid {

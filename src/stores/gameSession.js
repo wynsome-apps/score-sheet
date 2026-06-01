@@ -47,7 +47,7 @@ export const useGameSessionStore = defineStore('gameSession', () => {
     if (!activeGame.value) return
     activeGame.value.isFinished = true
     activeGame.value.endTime = new Date().toISOString()
-    
+
     // Calculate final scores and winner
     const gameTotals = totals.value
     activeGame.value.players.forEach((p, i) => {
@@ -65,11 +65,49 @@ export const useGameSessionStore = defineStore('gameSession', () => {
     }
     activeGame.value.winner = winner
 
-    // Save to history
+    // Save to history. Drop any earlier in-progress copy of this game first so
+    // a game that was exited-and-resumed doesn't end up duplicated.
+    historyStore.removeGame(activeGame.value.id)
     historyStore.addGame({ ...activeGame.value })
-    
+
     activeGame.value = null
     localStorage.removeItem('activeGame')
+  }
+
+  // Persist the current in-progress game into the games list (as unfinished) so
+  // it can be resumed later, then clear it as the active game. No-op if there's
+  // no active game or it's already finished.
+  function stashActiveGame() {
+    if (!activeGame.value || activeGame.value.isFinished) return
+
+    // Record current totals so list cards show the live scores.
+    const gameTotals = totals.value
+    activeGame.value.players.forEach((p, i) => {
+      p.totalScore = gameTotals[i]
+    })
+    activeGame.value.lastPlayedTime = new Date().toISOString()
+
+    // Upsert to the top of the list.
+    historyStore.removeGame(activeGame.value.id)
+    historyStore.addGame({ ...activeGame.value })
+
+    activeGame.value = null
+    localStorage.removeItem('activeGame')
+  }
+
+  // Exit the current game, saving it for later (it stays unfinished).
+  function exitGame() {
+    stashActiveGame()
+  }
+
+  // Resume a previously-exited, unfinished game from the list.
+  function resumeGame(game) {
+    // Safely stash any other in-progress game before switching.
+    stashActiveGame()
+    activeGame.value = JSON.parse(JSON.stringify(game))
+    // It's the live active game now, not a list entry.
+    historyStore.removeGame(game.id)
+    saveToLocalStorage()
   }
 
   function cancelGame() {
@@ -90,5 +128,5 @@ export const useGameSessionStore = defineStore('gameSession', () => {
     })
   })
 
-  return { activeGame, startGame, updateScore, finishGame, cancelGame, totals }
+  return { activeGame, startGame, updateScore, finishGame, exitGame, resumeGame, cancelGame, totals }
 })

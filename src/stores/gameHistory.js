@@ -13,6 +13,11 @@ export const useGameHistoryStore = defineStore('gameHistory', () => {
     saveToLocalStorage()
   }
 
+  function removeGame(id) {
+    history.value = history.value.filter(g => g.id !== id)
+    saveToLocalStorage()
+  }
+
   function saveToLocalStorage() {
     localStorage.setItem('gameHistory', JSON.stringify(history.value))
   }
@@ -33,5 +38,5 @@ export const useGameHistoryStore = defineStore('gameHistory', () => {
       .slice(0, 5)
   })
 
-  return { history, addGame, lastFiveGames, topPlayers }
+  return { history, addGame, removeGame, lastFiveGames, topPlayers }
 })
